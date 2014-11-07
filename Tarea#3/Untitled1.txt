@@ -1,0 +1,323 @@
+#include <iostream>
+#include <stdlib.h>
+#include <fstream>
+#include <windows.h>
+#include <string.h>
+#include <iomanip>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <limits.h>
+
+using namespace std;
+
+//Se debe crear un folder en C:\\
+class Directorio
+{
+	public:
+		string nombre; //nombre del archivo
+		string tipo; //si es archivo o directorio
+		Directorio *siguiente; //apuntador siguiente, es una lista de nodos
+
+        Directorio() //constructor vacio
+        {
+            siguiente = NULL;
+        }
+
+		Directorio(string nombre, string tipo) //constructor con parámetros
+		{
+		    this->nombre = nombre;
+		    this->tipo = tipo;
+		    siguiente = NULL;
+		}
+};
+
+typedef Directorio * Archivo; //un apuntador de tipo Directorio
+Directorio *dirdir = NULL; //apuntador global para llamar a la lista de archivos
+
+void InsertarArchivo(Archivo &archivo, string vnombre, string vtipo) //inserta los archivos a la lista interna
+{
+    Directorio *temp;
+    Directorio *nuevo_nodo = new Directorio(vnombre,vtipo);
+
+    if (archivo == NULL) //si es nulo, el archivo es igual al nuevo nodo
+    {
+		archivo = nuevo_nodo;
+	}
+	else
+	{
+	    temp = archivo; //la variable temporal contiene los datos de archivo
+	    while (temp -> siguiente != NULL) //mientras siguiente sea distinto de nulo
+	    {
+	        temp = temp -> siguiente; //temp va a apuntar al siguiente nodo
+	    }
+    	temp -> siguiente = nuevo_nodo; //sigueiente apunta al nuevo nodo
+	}
+}
+
+//http://ubuntuforums.org/archive/index.php/t-1697792.html (johnl)
+void CargarDirectorio(char vdirectorio[100]) //es la misma funcion que ListarArchivos pero aca solamente se guardan los elementos a la lista enlazada
+{
+	char C[100] = "C:\\";
+	strcat(C,"\\");
+	strcat(C,vdirectorio); //se concatena para crear la direccion completa
+
+	DIR *dir = opendir(C); //se abre el directorio en la direccion especificada
+
+	struct dirent* entry; //para leer los archivos dentro del directorio
+	struct stat s; //para saber que tipo de archivo es
+
+	char namebuf[PATH_MAX];
+	size_t base_len = strlen(C);
+
+	string nomA, nomD, A = "A", D = "D"; //para guardar nombres y tipos
+
+	if(!dir) //si no se pudo abrir el directorio, mostrar mensaje
+    {
+		perror("No se pudo abrir el directorio o archivo");
+		return;
+	}
+
+	while((entry = readdir(dir))!= NULL) //mientras el directorio sea distinto de nulo (existen archivos dentro)
+    {
+		if(!strcmp(entry->d_name,"..") || !strcmp(entry->d_name, ".")) //ignora ../ (directorio padre) y ./ (directorio actual)
+        {
+			continue;
+		}
+
+		snprintf(namebuf, sizeof(namebuf), "%s%s%s", C, (C[base_len - 1] == '/' ? "" : "/"),entry->d_name);
+
+        if (stat(namebuf, &s) != 0)
+        {
+            perror(namebuf);
+            continue;
+        }
+        //http://stackoverflow.com/questions/10376056/sys-stat-s-isdirm-with-struct-dirent (Adam Rosenfield)
+        if (S_ISREG(s.st_mode)) //si el archivo es regular (tipo texto)
+        {
+            nomA = entry->d_name; //se guarda el nombre de entrada (nombre del archivo)
+            InsertarArchivo(dirdir,nomA,A); //se inserta a la lista, segun tipo
+        }
+		else if (S_ISDIR(s.st_mode)) //si es directorio
+        {
+            nomD = entry->d_name; //se guarda el nombre de entrada (nombre del directorio)
+            InsertarArchivo(dirdir,nomD,D); //se inserta a la lista segun su tipo
+        }
+    }
+	closedir(dir);
+}
+
+//http://ubuntuforums.org/archive/index.php/t-1697792.html (johnl)
+void ListarArchivos(char vdirectorio[100]) //es la misma que CargarDirectorio pero aqui solamente se escribe en pantalla
+{
+	char C[100] = "C:\\";
+	strcat(C,"\\");
+	strcat(C,vdirectorio); //se concatena para crear la direccion completa
+
+	DIR *dir = opendir(C); //se abre el directorio en la direccion especificada
+
+	struct dirent* entry; //para leer los archivos dentro del directorio
+	struct stat s; //para saber que tipo de archivo es
+
+	char namebuf[PATH_MAX];
+	size_t base_len = strlen(C);
+
+	if(!dir) //si no se pudo abrir el directorio, mostrar mensaje
+    {
+		perror("No se pudo abrir el directorio o archivo");
+		return;
+	}
+
+	cout << "** CONTENIDO DEL DIRECTORIO **" << endl;
+	cout << setw(10) << left << "TIPO" << "ARCHIVO" << endl;
+	cout << "------------------------------" << endl;
+
+	while((entry = readdir(dir))!= NULL) //mientras el directorio sea distinto de nulo (existen archivos dentro)
+    {
+		if(!strcmp(entry->d_name,"..") || !strcmp(entry->d_name, ".")) //ignora ../ (directorio padre) y ./ (directorio actual)
+        {
+			continue;
+		}
+
+		snprintf(namebuf, sizeof(namebuf), "%s%s%s", C, (C[base_len - 1] == '/' ? "" : "/"),entry->d_name);
+
+        if (stat(namebuf, &s) != 0)
+        {
+            perror(namebuf);
+            continue;
+        }
+        //http://stackoverflow.com/questions/10376056/sys-stat-s-isdirm-with-struct-dirent (Adam Rosenfield)
+        if (S_ISREG(s.st_mode)) //si el archivo es regular (tipo texto)
+        {
+            cout << setw(10) << left << "TXT" << entry->d_name << endl; //se imprime
+        }
+		else if (S_ISDIR(s.st_mode)) //si es directorio
+        {
+            cout << setw(10) << left << "<DIR>" << entry->d_name << endl; //se imprime
+        }
+    }
+	closedir(dir);
+}
+
+void ImprimirDirectorio(Directorio *directorio) //imprime la lista interna
+{
+	Directorio *temp = directorio; //se asigna el directorio a una variable temporal
+
+	while (temp != NULL) //mientras la lista no esté vacía
+    {
+	    cout << temp -> nombre << ", " << temp -> tipo; //se imprime el nombre y el tipo
+	    if (temp -> siguiente != NULL) //siguiente se escribe como ->
+        {
+			cout << "->";
+	    }
+		temp = temp -> siguiente; //se avanza al siguiente elemento
+	}
+}
+
+void CrearArchivo(char vnombre[100], char vdirectorio[100])
+{
+	string A = "A";
+	char C[100]="C:\\";
+	strcat(C,"\\");
+	strcat(C, vdirectorio);
+	strcat(C,"\\");
+	strcat(C,"\\");
+	strcat(C,vnombre);
+	strcat(C, ".txt"); //se concatena la direccion completa seguida por .txt
+
+    ofstream out(C); //se abre el archivo en la direccion especificada en modo escritura
+    string nom = string(vnombre); //se hace un cast de char a string
+
+    if(!out) //si no se puede crear el archivo se muestra un mensaje en pantalla
+    {
+		cout << "No se pudo crear el archivo" << endl;
+	}
+	else
+	{
+		cout << "El archivo ha sido creado!" << endl;
+		InsertarArchivo(dirdir,nom, A); //se inserta el archivo a la lista interna
+	}
+	out.close();
+}
+
+void ModificarArchivo(Archivo &archivo, char vnombre[100], char vdirectorio[100])
+{
+    string linea;
+    int flag = 0;
+	char C[100] = "C:\\";
+	strcat(C,"\\");
+	strcat(C,vdirectorio);
+	strcat(C,"\\");
+	strcat(C,"\\");
+	strcat(C,vnombre);
+	strcat(C,".txt"); //se concatena la direccion completa seguida por .txt
+
+	Directorio *temp = archivo; //variable temporal que contiene los elementos de archivo
+
+	while(temp != NULL) //mientras la lista no esté vacía
+    {
+		if(temp -> nombre == vnombre && temp -> tipo == "A") //si el nombre y el tipo coinciden con alguno de la lista
+		{
+            ofstream out(C); //se abre el archivo en la direccion especificada en modo escritura
+			cout << "> ";
+			cin.ignore();
+			getline(cin,linea); //guarda lo que el usuario escribe
+			while (linea != "") //al presionar -enter- termina la escritura en el archivo
+			{
+				out << linea << endl; //cada linea se escribe al archivo
+				cout << "> ";
+				getline(cin,linea); //continua leyendo lineas
+			}
+			out.close();
+			return;
+		}
+		else if(temp -> nombre != vnombre || temp -> tipo == "D") //si el nombre ingresado pertenece a un directorio
+		{
+			flag = 1;
+		}
+		temp = temp -> siguiente; //se avanza al siguiente elemento hasta encontrar el que se está buscando para modificar
+	}
+	if(flag == 1) //si lo que se ingresó en realidad fue directorio
+	{
+		cout << "El archivo no existe o es directorio" << endl; //muestra mensaje de error y no se hace nada
+	}
+}
+
+void VerArchivo(char vnombre[100], char vdirectorio[100])
+{
+	string linea;
+	char C[100] = "C:\\";
+	strcat(C,"\\");
+	strcat(C,vdirectorio);
+	strcat(C,"\\");
+	strcat(C,"\\");
+	strcat(C,vnombre);
+	strcat(C,".txt"); //se concatena la direccion completa seguida por .txt
+
+	ifstream in(C); //se abre el archivo en la direccion especificada en modo lectura
+
+	while (getline(in, linea)) //mientras hayan lineas escritas en el archivo
+    {
+		cout << linea << endl; //se imprime cada linea
+	}
+	in.close();
+}
+void MostrarMenu() //muestra las opciones
+{
+	cout << "MENU" << endl;
+	cout << "1. Listar Directorio" << endl;
+	cout << "2. Crear Archivo" << endl;
+	cout << "3. Modificar Archivo" << endl;
+	cout << "4. Ver Archivo" << endl;
+	cout << "0. Salir" << endl;
+	cout << endl;
+}
+
+int main()
+{
+    char directorio[100], archivo[100];
+	int opcion = 0;
+
+	cout << "Ingrese la direccion del directorio: " << endl;
+	cin >> directorio;
+	CargarDirectorio(directorio); //guardas los elementos a la lista enlazada
+	//en ninguna de las opciones es necesario escribir .txt dado que en las funciones se le agrega
+
+    do //ciclo que continua mientras el usuario no se salga del programa
+    {
+		MostrarMenu(); //se muestra el menu
+		cin >> opcion; //se lee la opcion ingresada
+		cin.ignore();
+
+		switch(opcion) //switch segun las opciones del menu
+		{
+			case 1: //la opcion 1 lista el directorio
+				ListarArchivos(directorio);
+				//ImprimirDirectorio(dirdir);
+				cout << endl;
+				break;
+			case 2: //la opcion 2 permite creacion de archivos
+				cout << "Ingrese el nombre del archivo que desea crear:" << endl;
+				cin >> archivo;
+				CrearArchivo(archivo, directorio);
+				cout << endl;
+				break;
+			case 3: //la opcion 3 permite editar un archivo
+				cout << "ingrese el nombre del archivo que desea modificar: " << endl;
+				cin >> archivo;
+				ModificarArchivo(dirdir, archivo, directorio);
+				cout << endl;
+				break;
+			case 4: //la opcion 4 permite ver el contenido de un archivo
+				cout << "Ingrese el nombre del archivo que desea ver: " << endl;
+				cin >> archivo;
+				VerArchivo(archivo,directorio);
+				cout << endl;
+				break;
+		}
+	}while(opcion!=0); //la opcion 0 es para salir
+
+    return 0;
+}
+
