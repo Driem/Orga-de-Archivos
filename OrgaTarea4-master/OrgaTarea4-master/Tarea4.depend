@@ -1,0 +1,77 @@
+# depslib dependency file v1.0
+1416528368 source:/home/turupawn/Projects/Codeblocks/Clases/OrgaDeArchivos/Tarea4/Evaluador.cpp
+	"Evaluador.h"
+
+1416528106 /home/turupawn/Projects/Codeblocks/Clases/OrgaDeArchivos/Tarea4/Evaluador.h
+	<iostream>
+	"tinyxml2.h"
+	<iostream>
+	<list>
+
+1415717045 /home/turupawn/Projects/Codeblocks/Clases/OrgaDeArchivos/Tarea4/tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdarg.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<cstdarg>
+	<android/log.h>
+	<assert.h>
+
+1416528535 source:/home/turupawn/Projects/Codeblocks/Clases/OrgaDeArchivos/Tarea4/main.cpp
+	"Evaluador.h"
+	<iostream>
+	"tinyxml2.h"
+	<iostream>
+	<list>
+
+1415717073 source:/home/turupawn/Projects/Codeblocks/Clases/OrgaDeArchivos/Tarea4/tinyxml2.cpp
+	"tinyxml2.h"
+	<new>
+	<stddef.h>
+	<cstddef>
+
+1416521800 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\evaluador.cpp
+	"Evaluador.h"
+
+1416521800 c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\evaluador.h
+	<iostream>
+	"tinyxml2.h"
+	<iostream>
+	<list>
+
+1416521800 c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\tinyxml2.h
+	<ctype.h>
+	<limits.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<stdarg.h>
+	<cctype>
+	<climits>
+	<cstdio>
+	<cstdlib>
+	<cstring>
+	<cstdarg>
+	<android/log.h>
+	<assert.h>
+
+1416637044 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\main.cpp
+	"Evaluador.h"
+	<iostream>
+	"tinyxml2.h"
+	<iostream>
+	<list>
+
+1416521800 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\tinyxml2.cpp
+	"tinyxml2.h"
+	<new>
+	<stddef.h>
+	<cstddef>
+
