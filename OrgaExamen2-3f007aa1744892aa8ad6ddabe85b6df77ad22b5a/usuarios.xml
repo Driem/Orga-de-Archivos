@@ -1,0 +1,6 @@
+<Usuarios>
+    <Usuario nombre="lolo" edad="15" estado="activo"/>
+    <Usuario nombre="roro" edad="18" estado="estudiando"/>
+    <Usuario nombre="rero" edad="21" estado="durmiendo"/>
+    <Usuario nombre="mumo" edad="15" estado="comiendo"/>
+</Usuarios>

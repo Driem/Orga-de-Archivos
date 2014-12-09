@@ -18,7 +18,8 @@ using namespace tinyxml2;
 float getTemperature(string nombre_archivo)
 {
 
-
+    XMLDocument doc;
+    doc.LoadFile(nombre_archivo.c_str());//Se abre el archivo XML
     XMLElement* current_element = doc.FirstChildElement("current")->FirstChildElement("temperature");// Se crea un elemento que apunta a current que es el elemento central o podemos decir que es la raiz
                                                                                                     //y este a su vez apunta al elemento temperatura
     return atof(current_element->Attribute("value"));//Retorna el attributo value del tag temperature y lo transforma a flotante gracias al metodo atof

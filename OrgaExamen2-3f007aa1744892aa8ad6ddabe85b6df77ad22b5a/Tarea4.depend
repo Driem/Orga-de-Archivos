@@ -37,16 +37,17 @@
 	<stddef.h>
 	<cstddef>
 
-1416521800 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\evaluador.cpp
+1418099903 source:/home/turupawn/Projects/Clases/Orga/Examen2/Evaluador.cpp
 	"Evaluador.h"
 
-1416521800 c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\evaluador.h
+1418092050 /home/turupawn/Projects/Clases/Orga/Examen2/Evaluador.h
 	<iostream>
 	"tinyxml2.h"
 	<iostream>
 	<list>
+	"NodoAVL.h"
 
-1416521800 c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\tinyxml2.h
+1417901142 /home/turupawn/Projects/Clases/Orga/Examen2/tinyxml2.h
 	<ctype.h>
 	<limits.h>
 	<stdio.h>
@@ -62,29 +63,37 @@
 	<android/log.h>
 	<assert.h>
 
-1416637044 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\main.cpp
-	"Evaluador.h"
-	<iostream>
-	"tinyxml2.h"
-	<iostream>
-	<list>
-
-1416521800 source:c:\users\dell-inspiron15r\desktop\orgatarea4-master\orgatarea4-master\tinyxml2.cpp
+1417901142 source:/home/turupawn/Projects/Clases/Orga/Examen2/tinyxml2.cpp
 	"tinyxml2.h"
 	<new>
 	<stddef.h>
 	<cstddef>
 
-1416521800 source:c:\users\dell-inspiron15r\documents\github\orga-de-archivos\orgatarea4-master\orgatarea4-master\evaluador.cpp
+1418099970 source:/home/turupawn/Projects/Clases/Orga/Examen2/main.cpp
 	"Evaluador.h"
-
-1416521800 c:\users\dell-inspiron15r\documents\github\orga-de-archivos\orgatarea4-master\orgatarea4-master\evaluador.h
+	"NodoAVL.h"
 	<iostream>
 	"tinyxml2.h"
 	<iostream>
 	<list>
 
-1416521800 c:\users\dell-inspiron15r\documents\github\orga-de-archivos\orgatarea4-master\orgatarea4-master\tinyxml2.h
+1418092567 /home/turupawn/Projects/Clases/Orga/Examen2/NodoAVL.h
+	<iostream>
+
+1418091588 source:/home/turupawn/Projects/Clases/Orga/Examen2/NodoAVL.cpp
+	"NodoAVL.h"
+
+1418129788 source:c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\evaluador.cpp
+	"Evaluador.h"
+
+1418129788 c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\evaluador.h
+	<iostream>
+	"tinyxml2.h"
+	<iostream>
+	<list>
+	"NodoAVL.h"
+
+1418129788 c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\tinyxml2.h
 	<ctype.h>
 	<limits.h>
 	<stdio.h>
@@ -100,16 +109,15 @@
 	<android/log.h>
 	<assert.h>
 
-1416521800 source:c:\users\dell-inspiron15r\documents\github\orga-de-archivos\orgatarea4-master\orgatarea4-master\tinyxml2.cpp
+1418129788 c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\nodoavl.h
+	<iostream>
+
+1418129788 source:c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\nodoavl.cpp
+	"NodoAVL.h"
+
+1418129788 source:c:\users\dell-inspiron15r\desktop\orgaexamen2-3f007aa1744892aa8ad6ddabe85b6df77ad22b5a\tinyxml2.cpp
 	"tinyxml2.h"
 	<new>
 	<stddef.h>
 	<cstddef>
-
-1418134369 source:c:\users\dell-inspiron15r\documents\github\orga-de-archivos\orgatarea4-master\orgatarea4-master\main.cpp
-	"Evaluador.h"
-	<iostream>
-	"tinyxml2.h"
-	<iostream>
-	<list>
 

@@ -1,0 +1,7 @@
+<Usuarios>
+    <Usuario nombre="lolo" edad="15" estado="activo"/>
+    <Usuario nombre="koko" edad="18" estado="estudiando"/>
+    <Usuario nombre="kula" edad="21" estado="durmiendo"/>
+    <Usuario nombre="mumo" edad="15" estado="comiendo"/>
+    <Usuario nombre="meme" edad="19" estado="comiendo"/>
+</Usuarios>
