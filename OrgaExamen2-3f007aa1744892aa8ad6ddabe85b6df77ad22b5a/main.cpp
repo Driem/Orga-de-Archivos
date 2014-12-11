@@ -30,27 +30,18 @@ int contarMayoresDeEdadXML(string nombre_archivo)
 //Devuelve el numero anterior del nodo raiz de un Arbol dado
 int obtenerNumeroAnterior(NodoAVL* raiz)
 {
-    int temp1 = 0,temp2 = 0;
+    int temp;
+  raiz = raiz->izq;
 
+  if( NULL != raiz )
+  {
+    while( NULL != raiz->der)
+      raiz = raiz->der;
 
+    temp = raiz->num;
+  }
 
-    if(temp1 < raiz->izq->num){
-        temp1 = raiz->izq->num;
-        return temp1;
-    }
-
-    if(temp2 < raiz->der->num){
-        temp1 = raiz->der->num;
-        return temp2;
-    }
-    temp1 = obtenerNumeroAnterior(raiz->izq);
-    temp2 = obtenerNumeroAnterior(raiz->der);
-    if(temp1 > temp2 || temp1 < raiz->num)
-        return temp1;
-
-     if(temp2 > temp1 || temp2 < raiz->num)
-        return temp2;
-
+  return temp;
 
 }
 
